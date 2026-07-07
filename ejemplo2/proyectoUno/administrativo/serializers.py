@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from administrativo.models import Estudiante, NumeroTelefonico
+from administrativo.models import Estudiante, NumeroTelefonico, Direcciones
 
 from rest_framework import serializers
 
@@ -27,3 +27,9 @@ class NumeroTelefonicoSerializer(serializers.HyperlinkedModelSerializer):
         model = NumeroTelefonico
         # fields = ['id', 'telefono', 'tipo']
         fields = '__all__'
+
+class DireccionesSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Direcciones
+        fields = '__all__'
+

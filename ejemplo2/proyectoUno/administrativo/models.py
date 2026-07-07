@@ -22,3 +22,11 @@ class NumeroTelefonico(models.Model):
 
     def __str__(self):
         return "%s %s" % (self.telefono, self.tipo)
+
+class Direcciones(models.Model):
+    estudiante = models.ForeignKey(Estudiante, on_delete=models.CASCADE, related_name="direcciones")
+    descripcion = models.CharField(max_length=100)
+    tipo = models.CharField(max_length=100)
+
+    def __str__(self):
+        return "%s %s" % (self.descripcion, self.tipo)

@@ -135,6 +135,39 @@ def agregar_estudiante():
 
     # Si es una petición GET o si hubo un error en POST, muestra el formulario
     return render_template("crear_estudiante.html")
+@app.route("/crear/direccion", methods=['GET', 'POST'])
+def crear_direccion():
+
+    estudiantes_disponibles = []
+
+    r_estudiantes = requests.get("http://localhost:8000/api/estudiantes/", headers=headers)
+    estudiantes_disponibles = json.loads(r_estudiantes.content)['results']
+
+    if request.method == 'POST':
+        descripcion = request.form['descripcion']
+        tipo = request.form['tipo']
+
+        estudiante_url = request.form['estudiante']
+
+        direccion_data = {
+            'descripcion': descripcion,
+            'tipo': tipo,
+            'estudiante': estudiante_url # Enviamos la URL del estudiante
+        }
+
+        r = requests.post("http://localhost:8000/api/direcciones/",
+                              json=direccion_data,
+                              headers=headers)
+
+        print(f"Status Code (Crear Dirección): {r.status_code}")
+
+        nueva_direccion = json.loads(r.content)
+        flash(f"Dirección '{nueva_direccion['descripcion']}' creada exitosamente para el estudiante!", 'success')
+        return redirect(url_for('las_direcciones')) # Redirigir a la lista principal o a una de direcciones
+
+    return render_template("crear_direccion.html",
+                           estudiantes=estudiantes_disponibles,
+                           )
 
 @app.route("/crear/numero/telefonico", methods=['GET', 'POST'])
 def crear_numero_telefonico():

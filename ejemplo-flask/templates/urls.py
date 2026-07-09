@@ -36,5 +36,7 @@ urlpatterns = [
         path('entrando/login/', views.ingreso, name="login"),
         path('api/', include(router.urls)),
         path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+        path('crear/direccion', views.crear_direccion,
+            name='crear_direccion'),
 
  ]
